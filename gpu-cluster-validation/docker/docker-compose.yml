@@ -1,0 +1,52 @@
+# Docker Compose for GPU Cluster Validation Suite
+# 
+# This is useful for:
+# - Local development
+# - Testing in isolated environment
+# - Running validation in container on datacenter machines
+#
+# Usage:
+#   docker-compose up
+#   docker-compose run validator --cluster config/cluster.yaml
+
+version: "3.9"
+
+services:
+  validator:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    image: gpu-cluster-validation:latest
+    container_name: gpu-cluster-validator
+    
+    # Mount configuration and output directories
+    volumes:
+      - ../config:/app/config:ro
+      - ../reports:/app/reports
+      - /var/run/docker.sock:/var/run/docker.sock  # For system queries
+    
+    # Environment
+    environment:
+      - LOG_LEVEL=INFO
+      - PYTHONUNBUFFERED=1
+    
+    # Network (shared with potential monitoring containers)
+    networks:
+      - validation
+    
+    # Resource limits for safety
+    deploy:
+      resources:
+        limits:
+          cpus: "4"
+          memory: 4G
+        reservations:
+          cpus: "2"
+          memory: 2G
+    
+    # Restart policy
+    restart: unless-stopped
+
+networks:
+  validation:
+    driver: bridge

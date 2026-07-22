@@ -1,0 +1,166 @@
+# Example GPU Cluster Configuration
+# 
+# This file defines the hardware configuration and validation thresholds
+# for your GPU cluster. Customize for your environment.
+
+cluster:
+  # Basic cluster identification
+  cluster_name: "us-west-2a-hgx"
+  deployment_date: "2024-01-15T10:30:00Z"
+  
+  # Metadata tags (optional)
+  tags:
+    datacenter: "us-west-2"
+    owner: "ai-infrastructure"
+    environment: "production"
+    hardware_vendor: "nvidia"
+  
+  # Compute nodes in cluster
+  # For an 8-node cluster with 8 H100s each:
+  nodes:
+    # Node 1
+    - name: "gpu-node-001"
+      gpu_count: 8
+      cpu_sockets: 2
+      memory_gb: 1024
+      numa_nodes: 12
+      ib_port: "1"
+      nvlink_topology: "full_mesh"
+      role: "compute"
+      
+      # Per-GPU specifications
+      gpus:
+        - index: 0
+          type: "H100"
+          memory_gb: 80
+          compute_capability: "9.0"
+          pcie_gen: "5"
+          pcie_lanes: 16
+        - index: 1
+          type: "H100"
+          memory_gb: 80
+          compute_capability: "9.0"
+          pcie_gen: "5"
+          pcie_lanes: 16
+        - index: 2
+          type: "H100"
+          memory_gb: 80
+          compute_capability: "9.0"
+          pcie_gen: "5"
+          pcie_lanes: 16
+        - index: 3
+          type: "H100"
+          memory_gb: 80
+          compute_capability: "9.0"
+          pcie_gen: "5"
+          pcie_lanes: 16
+        - index: 4
+          type: "H100"
+          memory_gb: 80
+          compute_capability: "9.0"
+          pcie_gen: "5"
+          pcie_lanes: 16
+        - index: 5
+          type: "H100"
+          memory_gb: 80
+          compute_capability: "9.0"
+          pcie_gen: "5"
+          pcie_lanes: 16
+        - index: 6
+          type: "H100"
+          memory_gb: 80
+          compute_capability: "9.0"
+          pcie_gen: "5"
+          pcie_lanes: 16
+        - index: 7
+          type: "H100"
+          memory_gb: 80
+          compute_capability: "9.0"
+          pcie_gen: "5"
+          pcie_lanes: 16
+    
+    # Nodes 2-8 (abbreviated for brevity)
+    - name: "gpu-node-002"
+      gpu_count: 8
+      cpu_sockets: 2
+      memory_gb: 1024
+      numa_nodes: 12
+      ib_port: "1"
+      nvlink_topology: "full_mesh"
+      role: "compute"
+      gpus: []  # Specs inherited from node definition
+    
+    - name: "gpu-node-003"
+      gpu_count: 8
+      cpu_sockets: 2
+      memory_gb: 1024
+      numa_nodes: 12
+      ib_port: "1"
+      nvlink_topology: "full_mesh"
+      role: "compute"
+      gpus: []
+    
+    - name: "gpu-node-004"
+      gpu_count: 8
+      cpu_sockets: 2
+      memory_gb: 1024
+      numa_nodes: 12
+      ib_port: "1"
+      nvlink_topology: "full_mesh"
+      role: "compute"
+      gpus: []
+    
+    - name: "gpu-node-005"
+      gpu_count: 8
+      cpu_sockets: 2
+      memory_gb: 1024
+      numa_nodes: 12
+      ib_port: "1"
+      nvlink_topology: "full_mesh"
+      role: "compute"
+      gpus: []
+    
+    - name: "gpu-node-006"
+      gpu_count: 8
+      cpu_sockets: 2
+      memory_gb: 1024
+      numa_nodes: 12
+      ib_port: "1"
+      nvlink_topology: "full_mesh"
+      role: "compute"
+      gpus: []
+    
+    - name: "gpu-node-007"
+      gpu_count: 8
+      cpu_sockets: 2
+      memory_gb: 1024
+      numa_nodes: 12
+      ib_port: "1"
+      nvlink_topology: "full_mesh"
+      role: "compute"
+      gpus: []
+    
+    - name: "gpu-node-008"
+      gpu_count: 8
+      cpu_sockets: 2
+      memory_gb: 1024
+      numa_nodes: 12
+      ib_port: "1"
+      nvlink_topology: "full_mesh"
+      role: "compute"
+      gpus: []
+  
+  # InfiniBand fabric configuration
+  fabric:
+    switch_type: "mellanox_sb"           # Switch model
+    hca_type: "mellanox_cx7"             # Host channel adapter
+    expected_link_width: "8x"            # Expected width (8x for ConnectX-7)
+    expected_link_speed: "400g"          # Expected speed (Gbps)
+    topology: "fat_tree"                 # Expected topology
+  
+  # Performance SLA thresholds
+  # These are the minimum requirements for cluster acceptance
+  sla:
+    rdma_bandwidth_gbs: 200.0            # Min RDMA throughput (GB/s)
+    rdma_latency_us: 5.0                 # Max RDMA latency (microseconds)
+    nccl_allreduce_throughput_gbs: 180.0 # Min AllReduce throughput (GB/s)
