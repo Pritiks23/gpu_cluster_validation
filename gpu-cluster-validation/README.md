@@ -140,4 +140,4 @@ Suitable for CI/CD gates: `gpu-cluster-validate ... || exit $?`
 
 ---
 
-**Questions?** Contact: infrastructure-team@company.com
+
